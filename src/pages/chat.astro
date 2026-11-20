@@ -50,8 +50,8 @@ const calUrl = (slug: string) => `https://cal.com/${site.calProfile}/${slug}`;
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
   Cal("init", "book", { origin: "https://cal.com" });
-  Cal.ns.book("inline", { elementOrSelector: "#cal-inline", calLink: calLink, config: { layout: "month_view" } });
-  Cal.ns.book("ui", { hideEventTypeDetails: false, layout: "month_view" });
+  Cal.ns.book("inline", { elementOrSelector: "#cal-inline", calLink: calLink, config: { layout: "month_view", theme: "light" } });
+  Cal.ns.book("ui", { theme: "light", hideEventTypeDetails: false, layout: "month_view", cssVarsPerTheme: { light: { "cal-brand": "#141a2e" } } });
 </script>
 
 <style>
