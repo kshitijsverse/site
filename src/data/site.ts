@@ -7,7 +7,7 @@ export const site = {
   url: "https://kshitijsverse.com",
   email: "hello@kshitijsverse.com",
   description:
-    "Kshitij Sharma learns AI in public, from Python to AI agents, and teaches it one short lesson at a time.",
+    "Kshitij Sharma, a Senior Staff AI/ML engineer, teaches AI the way it's built in industry: from Python to AI agents, one short lesson at a time.",
   calProfile: "kshitijsverse",
 };
 
@@ -15,7 +15,7 @@ export const channels = [
   { name: "Instagram", href: "https://www.instagram.com/kshitijsverse/", what: "Daily Reels: one AI idea in under a minute" },
   { name: "YouTube", href: "https://www.youtube.com/@kshitijsverse", what: "Shorts, plus longer walkthroughs of each stop" },
   { name: "WhatsApp channel", href: "https://whatsapp.com/channel/0029VbDXIwa7YScwpjxPjf09", what: "The day's lesson, new tools and AI job openings" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/kshitij-sharma-ai/", what: "What I'm learning, written up for working people" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/kshitij-sharma-ai/", what: "Lessons from building AI in production, for working professionals" },
   { name: "X", href: "https://x.com/kshitijsverse", what: "AI news as it breaks, with quick takes" },
   { name: "Threads", href: "https://www.threads.net/@kshitijsverse", what: "Short takes and Reels" },
   { name: "GitHub", href: "https://github.com/kshitijsverse", what: "Code for every lesson" },
@@ -23,7 +23,7 @@ export const channels = [
 
 export const calls = [
   { title: "Intro chat: learning AI", length: "15 min", slug: "15min", what: "Not sure where to start? Tell me where you are and we'll pick your first step." },
-  { title: "AI career & learning guidance", length: "30 min", slug: "30min", what: "A proper look at your goals, your background and a learning plan that fits." },
+  { title: "AI career & learning guidance", length: "30 min", slug: "30min", what: "Talk to a Senior Staff AI/ML engineer about your goals, your background and a plan that gets you there." },
 ];
 
 export type Phase = { id: string; name: string; color: string };
@@ -89,6 +89,6 @@ export const stops: Stop[] = [
   },
 ];
 
-export const currentStop = 0; // index into stops: "You are here"
+export const currentStop = 0; // index into stops: where the course currently is
 
 export const phaseOf = (id: Phase["id"]) => phases.find((p) => p.id === id)!;
