@@ -1,0 +1,62 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, calls, channels } from "../data/site";
+const wa = channels.find((c) => c.name === "WhatsApp channel")!.href;
+const calUrl = (slug: string) => `https://cal.com/${site.calProfile}/${slug}`;
+---
+<Base title="Book a chat" description="Book a free call with Kshitij Sharma about learning AI or an AI career.">
+  <section class="section">
+    <div class="wrap">
+      <h1 class="page-title">Book a chat</h1>
+      <p class="lede">Free while the community is small. Pick a call, then a time that suits you.</p>
+
+      <ul class="rows calls">
+        {calls.map((c) => (
+          <li id={c.slug}>
+            <a href={calUrl(c.slug)}>{c.title}</a>
+            <span class="meta">{c.length}. {c.what}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div id="cal-inline" class="cal-embed" aria-label="Booking calendar"></div>
+      <noscript>
+        <p class="muted">The calendar needs JavaScript. Use the links above to book on Cal.com.</p>
+      </noscript>
+
+      <h2 class="workshops-title">Workshops</h2>
+      <p>
+        Live workshops are on the way. The first one will be announced on the <a href={wa}>WhatsApp channel</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script is:inline define:vars={{ calLink: site.calProfile }}>
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1]; api.q = api.q || [];
+        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+        else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "book", { origin: "https://cal.com" });
+  Cal.ns.book("inline", { elementOrSelector: "#cal-inline", calLink: calLink, config: { layout: "month_view" } });
+  Cal.ns.book("ui", { hideEventTypeDetails: false, layout: "month_view" });
+</script>
+
+<style>
+  .page-title { font-size: var(--step-3); font-weight: 850; margin-bottom: 1rem; }
+  .calls { margin-top: 2.5rem; }
+  .cal-embed { margin-top: 2.5rem; width: 100%; min-height: 34rem; }
+  .workshops-title { margin-top: 3.5rem; margin-bottom: 0.75rem; }
+</style>

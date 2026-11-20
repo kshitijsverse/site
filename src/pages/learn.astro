@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import LineMap from "../components/LineMap.astro";
+import { channels } from "../data/site";
+const wa = channels.find((c) => c.name === "WhatsApp channel")!.href;
+---
+<Base title="Learn: Zero to Agents" description="The full course line: Python, statistics, machine learning, deep learning, transformers, LLMs and AI agents.">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h1 class="page-title">Zero to Agents</h1>
+        <p class="lede">
+          The whole route, stop by stop. Each stop becomes a run of short lessons: a Reel to get the idea,
+          notes to go deeper, and code on GitHub to try it yourself.
+        </p>
+        <p>
+          The order isn't fixed. If a stop gets more questions, it gets more lessons.
+          New lessons go out on the <a href={wa}>WhatsApp channel</a> first.
+        </p>
+      </div>
+      <LineMap detailed />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-title { font-size: var(--step-3); font-weight: 850; margin-bottom: 1rem; }
+  .section-head { margin-bottom: 3rem; }
+  .section-head p + p { margin-top: 1rem; }
+</style>

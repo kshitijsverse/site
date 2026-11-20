@@ -1,0 +1,107 @@
+/* Kshitij's Verse: transit-map identity.
+   One bold element (the line). Everything else stays quiet. */
+
+:root {
+  --paper: #f4f6f9;
+  --surface: #ffffff;
+  --ink: #141a2e;
+  --muted: #555c73;
+  --rule: #d5d9e3;
+
+  /* One colour per phase of the course line */
+  --line-found: #1f5bd1;
+  --line-ml: #0e8a63;
+  --line-dl: #7b3fd0;
+  --line-llm: #c0186f;
+  --line-agent: #e3620b;
+
+  --focus: #1f5bd1;
+
+  --font: "Overpass Variable", "Overpass", system-ui, sans-serif;
+  --step-0: 1.125rem;   /* body 18px */
+  --step-1: 1.333rem;
+  --step-2: 1.777rem;
+  --step-3: 2.369rem;
+  --step-hero: clamp(3rem, 9vw, 6.75rem);
+
+  --wrap: 72rem;
+  --measure: 38rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --track: 8px;     /* line thickness */
+  --stop: 22px;     /* station marker size */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+h1, h2, h3 { line-height: 1.1; margin: 0; letter-spacing: -0.015em; }
+h2 { font-size: var(--step-2); font-weight: 750; }
+h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; max-width: var(--measure); }
+
+a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+a:hover { text-decoration-color: var(--line-found); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Header */
+.site-header { padding: 1.25rem 0; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.brand { font-weight: 800; text-decoration: none; font-size: 1.05rem; display: inline-flex; align-items: center; gap: 0.55rem; }
+.brand-dot { width: 14px; height: 14px; border-radius: 50%; border: 4px solid var(--line-found); background: var(--surface); }
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.site-nav a { text-decoration: none; font-weight: 600; }
+.site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--line-found); }
+
+/* Buttons */
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+.btn {
+  display: inline-block; padding: 0.7rem 1.15rem 0.6rem; border-radius: 999px;
+  font-weight: 700; text-decoration: none; border: 2px solid var(--ink);
+}
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--line-found); border-color: var(--line-found); }
+.btn-quiet:hover { background: var(--surface); }
+
+/* Sections */
+main { display: block; }
+.section { padding: clamp(3rem, 8vw, 5.5rem) 0; }
+.section + .section { border-top: 1px solid var(--rule); }
+.section-head { margin-bottom: 2rem; }
+.section-head p { margin-top: 0.6rem; color: var(--muted); }
+.lede { font-size: var(--step-1); line-height: 1.5; }
+.muted { color: var(--muted); }
+.prose p + p { margin-top: 1rem; }
+
+/* Rows: plain list of things with a name and a sentence */
+.rows { list-style: none; margin: 0; padding: 0; max-width: 50rem; }
+.rows li { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 15rem 1fr; gap: 0.25rem 1.5rem; align-items: baseline; }
+.rows li:first-child { border-top: 1px solid var(--rule); }
+.rows a { font-weight: 700; }
+.rows .meta { color: var(--muted); }
+@media (max-width: 600px) { .rows li { grid-template-columns: 1fr; } }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--rule); padding: 2.5rem 0 3rem; color: var(--muted); font-size: 1rem; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
+.site-footer a { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

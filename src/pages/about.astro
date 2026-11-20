@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import { site, channels } from "../data/site";
+const li = channels.find((c) => c.name === "LinkedIn")!.href;
+---
+<Base title="About" description="Who's behind Kshitij's Verse, and why the name has an extra S.">
+  <section class="section">
+    <div class="wrap prose">
+      <h1 class="page-title">About</h1>
+      <p class="lede">
+        I'm {site.person}. Kshitij's Verse is my corner of the AI universe: the place where I learn
+        AI properly, from the foundations up, and share every step while I'm on it.
+      </p>
+      <p>
+        Most AI content either sells you a shortcut or assumes you already know the maths. This is neither.
+        It's one person going stop by stop, from Python to AI agents, and turning each step into a short
+        lesson you can follow on your phone.
+      </p>
+      <p>
+        Trending things make good teachers too. When a game, a film or a launch has everyone talking,
+        I'll use it to explain the AI behind it.
+      </p>
+
+      <h2 class="sub">Why the extra S?</h2>
+      <p>
+        Read it as Kshitij's Verse. Or read it as KshitijS, for Kshitij Sharma. Either way, you'll find
+        me as <strong>{site.handle}</strong> everywhere.
+      </p>
+
+      <h2 class="sub">Get in touch</h2>
+      <p>
+        Email <a href={`mailto:${site.email}`}>{site.email}</a>, connect on <a href={li}>LinkedIn</a>,
+        or <a href="/chat/">book a chat</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-title { font-size: var(--step-3); font-weight: 850; margin-bottom: 1rem; }
+  .prose .lede { margin-bottom: 1.5rem; }
+  .sub { margin-top: 3rem; margin-bottom: 0.75rem; }
+</style>

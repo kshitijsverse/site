@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+import LineMap from "../components/LineMap.astro";
+import { site, channels, calls } from "../data/site";
+const wa = channels.find((c) => c.name === "WhatsApp channel")!.href;
+const ig = channels.find((c) => c.name === "Instagram")!.href;
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="wordmark">{site.name}</h1>
+      <p class="lede">
+        I'm {site.person}. I'm learning AI from the ground up, in public: one short lesson a day,
+        from Python all the way to AI agents. Come along for the ride.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href={ig}>Follow on Instagram</a>
+        <a class="btn btn-quiet" href={wa}>Join the WhatsApp channel</a>
+      </div>
+    </div>
+    <div class="wrap map">
+      <h2 class="visually-hidden">The course line</h2>
+      <LineMap animate />
+      <p class="map-note muted">
+        First stop: Python. Lessons start soon. <a href="/learn/">See every stop on the line</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Ride along wherever you scroll</h2>
+        <p>Same journey, shaped for each place.</p>
+      </div>
+      <ul class="rows">
+        {channels.map((c) => (
+          <li><a href={c.href}>{c.name}</a><span class="meta">{c.what}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Talk to me</h2>
+        <p>Free calls while the community is small. Pick the one that fits.</p>
+      </div>
+      <ul class="rows">
+        {calls.map((c) => (
+          <li><a href={`/chat/#${c.slug}`}>{c.title}</a><span class="meta">{c.length}. {c.what}</span></li>
+        ))}
+      </ul>
+      <p class="muted after-rows">Or write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(3rem, 7vw, 5rem); }
+  .wordmark {
+    font-size: var(--step-hero);
+    font-weight: 850;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+  .map { margin-top: clamp(3rem, 8vw, 5rem); }
+  .map-note { margin-top: 2rem; font-size: 1rem; }
+  .after-rows { margin-top: 1.5rem; font-size: 1rem; }
+</style>

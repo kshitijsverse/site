@@ -1,0 +1,73 @@
+---
+import "@fontsource-variable/overpass";
+import "../styles/global.css";
+import { site, channels } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+}
+const { title, description = site.description, path = Astro.url.pathname } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name}: learn AI from zero to agents`;
+const canonical = new URL(path, site.url).toString();
+const nav = [
+  { href: "/learn/", label: "Learn" },
+  { href: "/notes/", label: "Notes" },
+  { href: "/chat/", label: "Book a chat" },
+  { href: "/about/", label: "About" },
+];
+const current = Astro.url.pathname;
+const find = (n: string) => channels.find((c) => c.name === n)!.href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#f4f6f9" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@kshitijsverse" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/"><span class="brand-dot" aria-hidden="true"></span>{site.name}</a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {nav.map((item) => (
+              <li><a href={item.href} aria-current={current.startsWith(item.href) ? "page" : undefined}>{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>{site.name} by {site.person}. <a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p>
+          <a href={find("Instagram")}>Instagram</a>,{" "}
+          <a href={find("YouTube")}>YouTube</a>,{" "}
+          <a href={find("WhatsApp channel")}>WhatsApp</a>,{" "}
+          <a href={find("LinkedIn")}>LinkedIn</a>,{" "}
+          <a href={find("X")}>X</a>,{" "}
+          <a href={find("GitHub")}>GitHub</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

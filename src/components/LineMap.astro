@@ -1,0 +1,141 @@
+---
+// The course drawn as a transit line. Horizontal on wide screens, vertical on phones.
+import { stops, currentStop, phaseOf } from "../data/site";
+
+interface Props {
+  detailed?: boolean; // Learn page: show what you learn and build at each stop
+  animate?: boolean;  // Home page: draw the line once on load
+}
+const { detailed = false, animate = false } = Astro.props;
+---
+<ol class:list={["line", { detailed, animate }]} aria-label="Course stops, in order">
+  {stops.map((stop, i) => {
+    const phase = phaseOf(stop.phase);
+    const isHere = i === currentStop;
+    const showPhase = detailed && phase.name.toLowerCase() !== stop.name.toLowerCase();
+    const next = stops[i + 1];
+    const nextColor = next ? phaseOf(next.phase).color : phase.color;
+    return (
+      <li
+        class:list={["stop", { here: isHere }]}
+        style={`--c: ${phase.color}; --c-next: ${nextColor};`}
+        id={detailed ? `stop-${i + 1}` : undefined}
+      >
+        <span class="marker" aria-hidden="true"></span>
+        <div class="label">
+          <span class="stop-name">{stop.name}</span>
+          {showPhase && <span class="stop-phase">{phase.name}</span>}
+          {isHere && <span class="here-tag">You are here</span>}
+          {detailed && (
+            <div class="stop-detail">
+              <p><strong>You learn:</strong> {stop.learn}</p>
+              <p><strong>You build:</strong> {stop.build}</p>
+            </div>
+          )}
+        </div>
+      </li>
+    );
+  })}
+</ol>
+
+<style>
+  .line {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  .stop {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    padding-top: calc(var(--stop) + 1rem);
+    text-align: center;
+  }
+  /* Track: from this marker's centre to the next marker's centre, coloured by phase */
+  .stop::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--stop) / 2 - var(--track) / 2);
+    left: 50%;
+    width: 100%;
+    height: var(--track);
+    background: var(--c);
+    border-radius: var(--track);
+  }
+  .stop:last-child::before { display: none; }
+
+  .marker {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--stop);
+    height: var(--stop);
+    margin-left: calc(var(--stop) / -2);
+    border-radius: 50%;
+    background: var(--surface);
+    border: 5px solid var(--ink);
+    z-index: 1;
+  }
+  .here .marker {
+    width: calc(var(--stop) + 10px);
+    height: calc(var(--stop) + 10px);
+    top: -5px;
+    margin-left: calc((var(--stop) + 10px) / -2);
+    border-color: var(--c);
+    box-shadow: 0 0 0 5px var(--paper), 0 0 0 8px var(--c);
+  }
+
+  .label { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; padding: 0 0.25rem; }
+  .stop-name { font-weight: 750; line-height: 1.2; }
+  .stop-phase { color: var(--muted); font-size: 0.9rem; }
+  .here-tag {
+    margin-top: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--surface);
+    background: var(--c);
+    padding: 0.15rem 0.6rem 0.05rem;
+    border-radius: 999px;
+  }
+  .stop-detail { display: none; }
+
+  /* One orchestrated moment: the line draws itself once */
+  .animate { animation: draw-x 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.15s both; }
+  @keyframes draw-x { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes draw-y { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+
+  /* Vertical line: phones, and always on the Learn page */
+  @media (max-width: 760px) {
+    .line { flex-direction: column; }
+    .stop { padding: 0 0 1.75rem calc(var(--stop) + 1.25rem); text-align: left; }
+    .stop::before {
+      top: calc(var(--stop) / 2);
+      left: calc(var(--stop) / 2 - var(--track) / 2);
+      width: var(--track);
+      height: 100%;
+      background: var(--c);
+    }
+    .marker { left: 0; margin-left: 0; }
+    .here .marker { left: -5px; margin-left: 0; }
+    .label { align-items: flex-start; }
+    .animate { animation-name: draw-y; }
+  }
+
+  .detailed { flex-direction: column; }
+  .detailed .stop { padding: 0 0 2.75rem calc(var(--stop) + 1.5rem); text-align: left; }
+  .detailed .stop::before {
+    top: calc(var(--stop) / 2);
+    left: calc(var(--stop) / 2 - var(--track) / 2);
+    width: var(--track);
+    height: 100%;
+    background: var(--c);
+  }
+  .detailed .marker { left: 0; margin-left: 0; }
+  .detailed .here .marker { left: -5px; margin-left: 0; }
+  .detailed .label { align-items: flex-start; }
+  .detailed .stop-name { font-size: var(--step-2); }
+  .detailed .stop-phase { font-size: 1rem; }
+  .detailed .stop-detail { display: block; margin-top: 0.75rem; }
+  .detailed .stop-detail p + p { margin-top: 0.35rem; }
+</style>

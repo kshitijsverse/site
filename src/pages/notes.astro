@@ -1,0 +1,25 @@
+---
+import Base from "../layouts/Base.astro";
+import { channels } from "../data/site";
+const wa = channels.find((c) => c.name === "WhatsApp channel")!.href;
+---
+<Base title="Notes" description="Short written notes that go with each lesson.">
+  <section class="section">
+    <div class="wrap">
+      <h1 class="page-title">Notes</h1>
+      <p class="lede">The written version of each lesson, with the details that don't fit in a Reel.</p>
+      <div class="empty">
+        <p>The first note goes up with the first lesson.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={wa}>Get it on WhatsApp first</a>
+          <a class="btn btn-quiet" href="/learn/">See what's coming</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-title { font-size: var(--step-3); font-weight: 850; margin-bottom: 1rem; }
+  .empty { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+</style>
